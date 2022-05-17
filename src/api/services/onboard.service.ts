@@ -1,6 +1,13 @@
 import { AxiosError } from "axios";
+
 import { collections } from "../../utils/mongodb.util";
-import { getCompanyInfo, getCustomers, getInvoices } from "./../../utils";
+import {
+    getCompanyInfo,
+    getCustomerCount,
+    getCustomers,
+    getInvoiceCount,
+    getInvoices,
+} from "../../utils/qbo.util";
 
 export class OnboardService {
     constructor() {}
@@ -9,28 +16,62 @@ export class OnboardService {
         try {
             console.log(`Onboarding Started : <${business}>`);
 
+            // For Business info
             const res1 = await getCompanyInfo();
-
             if (res1.data && res1.data.CompanyInfo) {
                 await collections.companyInfo?.insertOne(res1.data.CompanyInfo);
 
                 console.log("Company Info Inserted");
             }
+            const patchSize = 10;
 
-            const res2 = await getCustomers(1);
-            if (res2.data && res2.data.QueryResponse.Customer) {
-                await collections.customers?.insertMany(
-                    res2.data.QueryResponse.Customer
+            // For Customers
+            const customerCountResponse = await getCustomerCount();
+            const customerTotalCount =
+                customerCountResponse.data.QueryResponse.totalCount;
+            for (
+                let patchStart = 1;
+                patchStart <= customerTotalCount;
+                patchStart += patchSize
+            ) {
+                console.log(
+                    `Customer: PatchStart: ${patchStart} PatchSize: ${patchSize} Total: ${customerTotalCount}`
                 );
-                console.log("Customers Inserted to DB");
+
+                const res2 = await getCustomers(patchStart, patchSize);
+                if (res2.data && res2.data.QueryResponse.Customer) {
+                    await collections.customers?.insertMany(
+                        res2.data.QueryResponse.Customer
+                    );
+                    console.log(
+                        `Customers Inserted to DB PatchStart: ${res2.data.QueryResponse.Customer.length} `
+                    );
+                }
             }
 
-            const res3 = await getInvoices(1);
-            if (res3.data && res3.data.QueryResponse.Invoice) {
-                await collections.invoices?.insertMany(
-                    res3.data.QueryResponse.Invoice
+            // For Invoices
+            const invoiceCountResponse = await getInvoiceCount();
+            const invoiceTotalCount =
+                invoiceCountResponse.data.QueryResponse.totalCount;
+
+            for (
+                let patchStart = 1;
+                patchStart <= invoiceTotalCount;
+                patchStart += patchSize
+            ) {
+                console.log(
+                    `Invoice: PatchStart: ${patchStart} PatchSize: ${patchSize} Total: ${invoiceTotalCount}`
                 );
-                console.log("Invoices Inserted to DB");
+
+                const res3 = await getInvoices(patchStart, patchSize);
+                if (res3.data && res3.data.QueryResponse.Invoice) {
+                    await collections.invoices?.insertMany(
+                        res3.data.QueryResponse.Invoice
+                    );
+                    console.log(
+                        `Invoices Inserted to DB ${res3.data.QueryResponse.Invoice.length}`
+                    );
+                }
             }
             console.log(`Onboarding Completed : <${business}>`);
             return true;
