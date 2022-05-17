@@ -1,0 +1,72 @@
+const companyInfo = {
+    QueryResponse: {
+        CompanyInfo: [
+            {
+                CompanyName: "Sandbox Company_US_1",
+                LegalName: "Sandbox Company_US_1",
+                CompanyAddr: {
+                    Id: "1",
+                    Line1: "123 Sierra Way",
+                    City: "San Pablo",
+                    Country: "US",
+                    CountrySubDivisionCode: "CA",
+                    PostalCode: "87999",
+                },
+                CustomerCommunicationAddr: {
+                    Id: "1",
+                    Line1: "123 Sierra Way",
+                    City: "San Pablo",
+                    Country: "US",
+                    CountrySubDivisionCode: "CA",
+                    PostalCode: "87999",
+                },
+                LegalAddr: {
+                    Id: "1",
+                    Line1: "123 Sierra Way",
+                    City: "San Pablo",
+                    Country: "US",
+                    CountrySubDivisionCode: "CA",
+                    PostalCode: "87999",
+                },
+                CustomerCommunicationEmailAddr: {
+                    Address: "noreply@quickbooks.com",
+                },
+                PrimaryPhone: {},
+                CompanyStartDate: "2022-03-05",
+                FiscalYearStartMonth: "January",
+                Country: "US",
+                Email: { Address: "noreply@quickbooks.com" },
+                WebAddr: {},
+                SupportedLanguages: "en",
+                NameValue: [
+                    { Name: "NeoEnabled", Value: "true" },
+                    { Name: "IsQbdtMigrated", Value: "false" },
+                    { Name: "IndustryType", Value: "Software publishers" },
+                    { Name: "CompanyType", Value: "Other" },
+                    { Name: "IndustryCode", Value: "511210" },
+                    { Name: "SubscriptionStatus", Value: "SUBSCRIBED" },
+                    { Name: "OfferingSku", Value: "QuickBooks Online Plus" },
+                    { Name: "PayrollFeature", Value: "false" },
+                    { Name: "AccountantFeature", Value: "false" },
+                    { Name: "QBOIndustryType", Value: "Landscaping Services" },
+                    { Name: "ItemCategoriesFeature", Value: "true" },
+                    {
+                        Name: "AssignedTime",
+                        Value: "2022-05-17T01:07:56-07:00",
+                    },
+                ],
+                domain: "QBO",
+                sparse: false,
+                Id: "1",
+                SyncToken: "11",
+                MetaData: {
+                    CreateTime: "2022-03-05T01:09:06-08:00",
+                    LastUpdatedTime: "2022-05-17T00:15:50-07:00",
+                },
+            },
+        ],
+        maxResults: 1,
+    },
+    time: "2022-05-17T01:22:40.313-07:00",
+};
+
