@@ -12,14 +12,15 @@ class OnboardRoutes {
         this.mountRoutes();
     }
 
-    async onboardBusiness(_req: Request, res: Response) {
+    async onboardBusiness(req: Request, res: Response) {
         try {
-            const result = await onboardService.onboardBusiness();
+            const business = req.query.business;
+            const result = await onboardService.onboardBusiness(business);
 
             if (result) {
                 return res.send({
                     status: true,
-                    message: "Data Onboarding Completed of Business <ABC>",
+                    message: `Data Onboarding Completed of Business <${business}>`,
                 });
             }
 

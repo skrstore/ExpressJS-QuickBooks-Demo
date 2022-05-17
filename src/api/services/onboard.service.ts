@@ -5,8 +5,10 @@ import { getCompanyInfo, getCustomers, getInvoices } from "./../../utils";
 export class OnboardService {
     constructor() {}
 
-    async onboardBusiness() {
+    async onboardBusiness(business: any) {
         try {
+            console.log(`Onboarding Started : <${business}>`);
+
             const res1 = await getCompanyInfo();
 
             if (res1.data && res1.data.CompanyInfo) {
@@ -30,6 +32,7 @@ export class OnboardService {
                 );
                 console.log("Invoices Inserted to DB");
             }
+            console.log(`Onboarding Completed : <${business}>`);
             return true;
         } catch (error: any) {
             if (
