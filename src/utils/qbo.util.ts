@@ -23,8 +23,21 @@ export const getCustomerCount = async () => {
 };
 
 export const getCustomers = async (patchStart: number, patchSize: number) => {
+    console.log("Customer Patch:: Start: ", patchStart, "Size :", patchSize);
+
     const customer_url = `/v3/company/${QBO_REALM_ID}/query?query=select * from Customer startposition ${patchStart} maxresults ${patchSize}`;
-    return await get(customer_url);
+    const result = await get(customer_url);
+    console.log("Result : Customer: Start", patchStart);
+
+    return result;
+};
+
+export const getCustomersNew = (patchStart: number, patchSize: number) => {
+    console.log("getCustomersNew");
+
+    return () => {
+        return getCustomers(patchStart, patchSize);
+    };
 };
 
 export const getInvoiceCount = async () => {
@@ -33,6 +46,17 @@ export const getInvoiceCount = async () => {
 };
 
 export const getInvoices = async (patchStart: number, patchSize: number) => {
+    console.log("Invoice Patch:: Start: ", patchStart, "Size :", patchSize);
     const invoice_url = `/v3/company/${QBO_REALM_ID}/query?query=select * from Invoice startposition ${patchStart} maxresults ${patchSize}`;
-    return await get(invoice_url);
+    const result = await get(invoice_url);
+    console.log("Result : Invoices: Start", patchStart);
+    return result;
+};
+
+export const getInvoicesNew = async (patchStart: number, patchSize: number) => {
+    console.log("getInvoicesNew");
+
+    return () => {
+        return getInvoices(patchStart, patchSize);
+    };
 };

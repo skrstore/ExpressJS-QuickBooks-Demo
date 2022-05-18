@@ -4,7 +4,7 @@ import { collections } from "../../utils/mongodb.util";
 import {
     getCompanyInfo,
     getCustomerCount,
-    getCustomers,
+    getCustomersNew,
     getInvoiceCount,
     getInvoices,
 } from "../../utils/qbo.util";
@@ -26,6 +26,7 @@ export class OnboardService {
             const patchSize = 10;
 
             // For Customers
+            const customerRequestPatches = [];
             const customerCountResponse = await getCustomerCount();
             const customerTotalCount =
                 customerCountResponse.data.QueryResponse.totalCount;
@@ -38,16 +39,33 @@ export class OnboardService {
                     `Customer: PatchStart: ${patchStart} PatchSize: ${patchSize} Total: ${customerTotalCount}`
                 );
 
-                const res2 = await getCustomers(patchStart, patchSize);
-                if (res2.data && res2.data.QueryResponse.Customer) {
-                    await collections.customers?.insertMany(
-                        res2.data.QueryResponse.Customer
-                    );
-                    console.log(
-                        `Customers Inserted to DB PatchStart: ${res2.data.QueryResponse.Customer.length} `
-                    );
-                }
+                customerRequestPatches.push(
+                    getCustomersNew(patchStart, patchSize)
+                );
             }
+
+            const customerData = await Promise.all(
+                customerRequestPatches.map((val) => val())
+            );
+
+            for (const val of customerData) {
+                await collections.customers?.insertMany(
+                    val.data.QueryResponse.Customer
+                );
+
+                console.log(
+                    `Customers Inserted to DB PatchStart: ${val.data.QueryResponse.Customer.length} `
+                );
+            }
+            // const res2 = await getCustomers(patchStart, patchSize);
+            // if (res2.data && res2.data.QueryResponse.Customer) {
+            //     await collections.customers?.insertMany(
+            //         res2.data.QueryResponse.Customer
+            //     );
+            //     console.log(
+            //         `Customers Inserted to DB PatchStart: ${res2.data.QueryResponse.Customer.length} `
+            //     );
+            // }
 
             // For Invoices
             const invoiceCountResponse = await getInvoiceCount();
