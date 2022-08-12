@@ -1,0 +1,3 @@
+
+### To Onboard a Business
+GET http://localhost:8000/api/onboard?business=Demo

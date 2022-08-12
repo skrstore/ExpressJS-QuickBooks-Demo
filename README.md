@@ -4,6 +4,12 @@
 
 ## Notes
 
+- 1- Setup QuickBooks Account
+- 2- Setup `.env` using https://developer.intuit.com/app/developer/playground
+- 3- Install dependencies `npm i`
+- 4- Start development server `npm run dev`
+- 5- Use `api.http` for API request
+
 - Task
   - Get three details from accounting software
     - Business Details
