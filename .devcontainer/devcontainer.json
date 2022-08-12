@@ -2,11 +2,12 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"akamud.vscode-theme-onedark", // Theme
-				"PKief.material-icon-theme", // Icon
-				"streetsidesoftware.code-spell-checker", // Spell Checker
-                "IronGeek.vscode-env",
-				"humao.rest-client"
+				"akamud.vscode-theme-onedark",
+				"PKief.material-icon-theme",
+				"streetsidesoftware.code-spell-checker",
+				"IronGeek.vscode-env",
+				"humao.rest-client",
+				"vstirbu.vscode-mermaid-preview"
 			]
 		}
 	}
